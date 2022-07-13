@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Container } from "./style";
 import { api } from "../../services/api";
-import { TransactionsContext } from "../../../src/TransactionsContext";
+import { useTransactions } from "../../hooks/useTransactions";
 
 /* interface Transaction {
   transactions: tt[];
@@ -16,9 +16,10 @@ interface tt {
   category?: string;
   createdAt?: string;
 } */
+
 export function TransactionTable() {
-  const transactions = useContext(TransactionsContext);
-  console.log(transactions);
+  const { transactions } = useTransactions();
+  /* console.log("transactions>>>>>", transactions); */
 
   return (
     <Container>
@@ -33,9 +34,10 @@ export function TransactionTable() {
         </thead>
         <tbody>
           {transactions.map((transaction) => (
-            <tr key={transaction.id}>
-              <td>{transaction.id}</td>
-              <td>
+            <tr>
+              {/*   <td>{transaction.id}</td> */}
+              <td>{transaction.title}</td>
+              <td className={transaction.type}>
                 {new Intl.NumberFormat("pt-BR", {
                   style: "currency",
                   currency: "BRL",
